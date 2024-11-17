@@ -1,6 +1,6 @@
 import sqlite3
 
-# Conexión a la base de datos SQLite
+
 conn = sqlite3.connect('recetario.db')
 cursor = conn.cursor()
 
@@ -16,7 +16,7 @@ def crear_tablas():
     ''')
     conn.commit()
 
-# Agregar una nueva receta
+
 def agregar_receta(nombre, ingredientes, pasos):
     try:
         cursor.execute('INSERT INTO recetas (nombre, ingredientes, pasos) VALUES (?, ?, ?)',
@@ -26,7 +26,7 @@ def agregar_receta(nombre, ingredientes, pasos):
     except sqlite3.IntegrityError:
         print("Error: Ya existe una receta con ese nombre.")
 
-# Actualizar una receta existente
+
 def actualizar_receta(nombre, nuevos_ingredientes, nuevos_pasos):
     cursor.execute('UPDATE recetas SET ingredientes = ?, pasos = ? WHERE nombre = ?',
                    (nuevos_ingredientes, nuevos_pasos, nombre))
@@ -36,7 +36,7 @@ def actualizar_receta(nombre, nuevos_ingredientes, nuevos_pasos):
     else:
         print("Error: No se encontró una receta con ese nombre.")
 
-# Eliminar una receta
+
 def eliminar_receta(nombre):
     cursor.execute('DELETE FROM recetas WHERE nombre = ?', (nombre,))
     if cursor.rowcount > 0:
@@ -45,7 +45,7 @@ def eliminar_receta(nombre):
     else:
         print("Error: No se encontró una receta con ese nombre.")
 
-# Ver el listado de recetas
+
 def ver_recetas():
     cursor.execute('SELECT nombre FROM recetas')
     recetas = cursor.fetchall()
@@ -56,7 +56,7 @@ def ver_recetas():
     else:
         print("No hay recetas disponibles.")
 
-# Buscar una receta por nombre
+
 def buscar_receta(nombre):
     cursor.execute('SELECT ingredientes, pasos FROM recetas WHERE nombre = ?', (nombre,))
     resultado = cursor.fetchone()
@@ -66,7 +66,7 @@ def buscar_receta(nombre):
     else:
         print("Error: No se encontró una receta con ese nombre.")
 
-# Menú principal
+
 def menu():
     crear_tablas()
     while True:
@@ -104,7 +104,7 @@ def menu():
         else:
             print("Opción no válida. Intente nuevamente.")
 
-# Ejecución del programa
+
 if __name__ == '__main__':
     menu()
 
